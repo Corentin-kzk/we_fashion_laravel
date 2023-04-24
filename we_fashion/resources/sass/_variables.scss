@@ -1,0 +1,25 @@
+// Body
+$body-bg: #f8fafc;
+
+// Typography
+$font-size-base: 0.9rem;
+$line-height-base: 1.6;
+$font-family-sans-serif: 'Actor', sans-serif;
+$font-family-monospace:  'Bad Script', cursive;
+
+//Navbar
+$navbar-brand-font-size: 1.5rem;
+$navbar-light-brand-color: #6eeb83;
+$navbar-brand-hover-color: #58a4b0;
+
+$nav-link-color:#58a4b0;
+$nav-link-hover-color: #0c7c59;
+
+//theme
+$theme-colors: (
+    "primary": #6eeb83,
+    "secondary":#0c7c59,
+    "success": #58a4b0,
+    "dark": #2b303a,
+    "danger": #d64933,
+);

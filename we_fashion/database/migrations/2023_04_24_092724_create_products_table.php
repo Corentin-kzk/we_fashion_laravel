@@ -13,14 +13,15 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->string('nom', 100);
+            $table->string('name', 100);
             $table->text('description')->nullable();
-            $table->decimal('prix', 8, 2);
+            $table->decimal('price', 8, 2);
             $table->string('image')->nullable();
-            $table->boolean('publie')->default(false);
-            $table->enum('etat', ['en solde', 'standard']);
+            $table->boolean('published')->default(false);
+            $table->enum('status', ['en solde', 'standard']);
             $table->string('reference', 16)->unique();
-            $table->foreignId('categorie_id')->constrained('categories');
+            // $table->foreignId('categorie_label')->constrained('category');
+            // $table->foreignId('size_label')->constrained('size');
             $table->timestamps();
         });
     }
