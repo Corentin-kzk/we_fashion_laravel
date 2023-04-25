@@ -38,7 +38,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        $product = Product::with('sizes')->find($product->id);
+        $product = Product::where('published', true)->with('sizes')->find($product->id);
         return View('product.index', ['product' => $product]);
     }
 
@@ -64,5 +64,35 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         //
+    }
+
+        /**
+     * Display a listing of the resource.
+     */
+    public function Solde(): View
+    {
+        return View('index', ["products"=> Product::where('published', true)->where('status', 'en solde')->orderBy('created_at', 'desc')->with('sizes')->with('categories')->paginate(6), 'counter' => count(Product::where('published', true)->where('status', 'en solde')->get(['id'])) ]);
+    }
+
+        /**
+     * Display a listing of the resource.
+     */
+    public function category($slug): View
+    {
+        $haveCategory = Categorie::where('slug','=', $slug);
+        if ($haveCategory) {
+            $product = Product::where('published', true)->whereHas('categories', function($query)use ($slug) {
+                $query->where('slug', '=', $slug);
+            })->whereDoesntHave('categories', function($query) use ($slug) {
+                $query->where('slug', '<>', $slug);
+            })->with('sizes')->with('categories')->orderBy('created_at', 'desc')->paginate(6);
+        return View('index', ["products"=> $product, 'counter' => count(Product::where('published', true)->whereHas('categories', function($query)use ($slug) {
+            $query->where('slug', '=', $slug);
+        })->whereDoesntHave('categories', function($query) use ($slug) {
+            $query->where('slug', '<>', $slug);
+        })->with('sizes')->with('categories')->orderBy('created_at', 'desc')->get()) ]);
+        } else {
+            abort(404, 'Ressource non trouvée');
+        }
     }
 }

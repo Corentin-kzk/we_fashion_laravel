@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/',[ProductController::class, 'index']);
+Route::get('solde', [ProductController::class, 'solde'])->name('solde');
+Route::get('/category/{slug}', [ProductController::class, 'category']);
 
 
 Route::resource('product', ProductController::class);

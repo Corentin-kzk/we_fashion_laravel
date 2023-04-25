@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('navbars', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('route');
+            $table->integer('ordering')->default(0);
             $table->timestamps();
-            $table->string("label", 191);
-            $table->string("slug", 191);
         });
     }
 
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('navbars');
     }
 };

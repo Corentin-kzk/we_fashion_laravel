@@ -1,4 +1,4 @@
-@extends('base')
+@extends('layouts.app')
 
 @section('content')
 
@@ -11,11 +11,16 @@
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
         @foreach($products as $product)
         <div class="col">
+
             <div class="card" style="height: 100%">
                 <img src="{{$product->image}}" class="card-img-top" alt="items shop">
                 <div class="card-body">
                     <div class="h-25">
-                        <h2 class="card-title font-monospace fs-4">{{$product->name}}</h2>
+                        <h2 class="card-title font-monospace fs-4">{{$product->name}}
+                            @if($product->status === 'en solde')
+                            <span class="badge bg-info text-dark">{{$product->status}}</span>
+                        </h2>
+                        @endif
                     </div>
                     <div class="overflow-auto mt-3 h-50">
                         <p class=" card-text">{{$product->description}}</p>
@@ -35,7 +40,7 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    <a href="/product/{{$product->id}}" class="btn btn-primary">Go somewhere</a>
+                    <a href="/product/{{$product->id}}" class="btn btn-primary">En savoir plus <i class="bi bi-arrow-right-circle-fill"></i></a>
                 </div>
             </div>
         </div>
