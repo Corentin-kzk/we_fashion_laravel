@@ -3,17 +3,39 @@
 @section('content')
 
 <div class="container-fluid">
+    <div class="row justify-content-end">
+        <div class="col-4">
+            <p class="text-end">Number of article : {{$counter}}</p>
+        </div>
+    </div>
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
         @foreach($products as $product)
         <div class="col">
             <div class="card" style="height: 100%">
                 <img src="{{$product->image}}" class="card-img-top" alt="items shop">
                 <div class="card-body">
-                    <h2 class="card-title font-monospace fs-4">{{$product->name}}</h2>
-                    <div class="overflow-auto mb-3" style="height: 100px;">
-                        <p class="card-text">{{$product->description}}</p>
+                    <div class="h-25">
+                        <h2 class="card-title font-monospace fs-4">{{$product->name}}</h2>
                     </div>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <div class="overflow-auto mt-3 h-50">
+                        <p class=" card-text">{{$product->description}}</p>
+                    </div>
+                    <div class="row justify-content-end align-items-end h-25">
+                        <div class="col-5">
+                            <p class="text-start">
+                                {{ implode(', ', array_column($product->categories->toArray(), 'label')) }}
+                            </p>
+                        </div>
+                        <div class="col-5 offset-2">
+                            <p class="text-end">
+                                Size :
+                                {{ implode(', ', array_column($product->sizes->toArray(), 'label')) }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="/product/{{$product->id}}" class="btn btn-primary">Go somewhere</a>
                 </div>
             </div>
         </div>
@@ -21,22 +43,14 @@
     </div>
 </div>
 
-<div class="row flex-row-reverse  justify-content-center mt-2">
-    <div class="col col-md-4">
-        <nav class="d-flex justify-content-center">
-            @if($products)
-            <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">Next</a></li>
-            </ul>
-            @else
-            <div>No products</div>
-            @endif
+@if($counter > 6 && $products)
+<div class="row flex-row-reverse  justify-content-center mt-4">
+    <div class="col">
+        <nav class="d-flex flex-column-reverse justify-content-center">
+            {{$products->links()}}
         </nav>
     </div>
 </div>
+@endif
 
 @endsection

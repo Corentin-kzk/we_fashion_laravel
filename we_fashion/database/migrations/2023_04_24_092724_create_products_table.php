@@ -20,8 +20,6 @@ return new class extends Migration
             $table->boolean('published')->default(false);
             $table->enum('status', ['en solde', 'standard']);
             $table->string('reference', 16)->unique();
-            // $table->foreignId('categorie_label')->constrained('category');
-            // $table->foreignId('size_label')->constrained('size');
             $table->timestamps();
         });
     }

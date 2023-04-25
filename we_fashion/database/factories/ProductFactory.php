@@ -21,12 +21,10 @@ class ProductFactory extends Factory
             'name' => $this->faker->sentence($nbWords = 6, $variableNbWords = true),
             'description' => $this->faker->paragraph($nbSentences = 3, $variableNbSentences = true),
             'price' => $this->faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 1000),
-            // 'sizes' =>  $this->faker->randomElement(['XS', 'S', 'M', 'L', 'XL']) ,
             'image' => $this->faker->imageUrl($width = 640, $height = 480),
             'published' => $this->faker->boolean($chanceOfGettingTrue = 50),
             'status' => $this->faker->randomElement(['standard', 'en solde']),
             'reference' => $this->faker->regexify('[A-Za-z0-9]{16}'),
-            // 'category' => $this->faker->randomElement(['homme', 'femme']),
         ];
     }
 }

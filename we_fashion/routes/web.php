@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProductController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,11 +18,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/',[ProductController::class, 'index']);
 
 
-Route::prefix('/product')->name('product.')->controller(ProductController::class)->group(function () {
-    Route::get('/', 'index')->name('index');
-
-});
-
+Route::resource('product', ProductController::class);
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

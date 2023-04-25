@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categorie;
 use App\Models\Product;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
-use Nette\Utils\Paginator;
 
 class ProductController extends Controller
 {
@@ -14,7 +14,7 @@ class ProductController extends Controller
      */
     public function index(): View
     {
-        return View('index', ["products"=> Product::paginate(6)]);
+        return View('index', ["products"=> Product::with('sizes')->with('categories')->paginate(6), 'counter' => count(Product::get(['id'])) ]);
     }
 
     /**
@@ -38,7 +38,8 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        //
+        $product = Product::with('sizes')->find($product->id);
+        return View('product.index', ['product' => $product]);
     }
 
     /**
