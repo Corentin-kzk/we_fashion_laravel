@@ -9,6 +9,9 @@ use Illuminate\Database\Eloquent\Relations\belongsToMany;
 class Product extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'name', 'detail'
+    ];
     public function sizes() : belongsToMany
     {
         return $this->belongsToMany(Size::class);

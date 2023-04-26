@@ -1,11 +1,13 @@
 @extends('layouts.app')
 
+
+
 @section('content')
 
 <div class="container d-flex flex-column align-items-center justify-content-center">
     <div class="row mb-3">
         <div class="col-6 offset-1 ">
-             <img src="{{$product->image}}" class="img-fluid" alt="product image">
+             <img src="{{Storage::url($product->image) }}" class="img-fluid" alt="product image">
         </div>
         <div class="col-4 offset-1">
             <h1>{{$product->name}}</h1>
@@ -29,13 +31,6 @@
 </div>
 
 
-<div class="row flex-row-reverse  justify-content-center mt-2">
-    <div class="col">
-        <nav class="d-flex flex-column-reverse justify-content-center">
-
-        </nav>
-    </div>
-</div>
 
 
 @endsection

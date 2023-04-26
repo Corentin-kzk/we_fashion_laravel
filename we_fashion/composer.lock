@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f0d8b83a283847d6b1d28d757af670c7",
+    "content-hash": "c553bc49c6f0808a460e148efddef93f",
     "packages": [
         {
             "name": "brick/math",
@@ -6603,6 +6603,53 @@
                 }
             ],
             "time": "2023-04-22T07:38:19+00:00"
+        },
+        {
+            "name": "redberry/laravel-console",
+            "version": "v1.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/RedberryProducts/laravel-console.git",
+                "reference": "efbb0845a232ca53fd56ea7e9fc76e81355a68b0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/RedberryProducts/laravel-console/zipball/efbb0845a232ca53fd56ea7e9fc76e81355a68b0",
+                "reference": "efbb0845a232ca53fd56ea7e9fc76e81355a68b0",
+                "shasum": ""
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Redberry\\LaravelConsole\\ServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "files": [
+                    "./helpers.php"
+                ],
+                "psr-4": {
+                    "Redberry\\LaravelConsole\\": "/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "giunashvili",
+                    "email": "giuna@redberry.ge"
+                }
+            ],
+            "description": "Laravel Console is a convinient way to watch application logs",
+            "support": {
+                "issues": "https://github.com/RedberryProducts/laravel-console/issues",
+                "source": "https://github.com/RedberryProducts/laravel-console/tree/v1.1.2"
+            },
+            "time": "2021-07-05T06:37:17+00:00"
         },
         {
             "name": "sebastian/cli-parser",

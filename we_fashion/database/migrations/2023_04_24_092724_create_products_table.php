@@ -17,8 +17,8 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->decimal('price', 8, 2);
             $table->string('image')->nullable();
-            $table->boolean('published')->default(false);
-            $table->enum('status', ['en solde', 'standard']);
+            $table->boolean('published')->default(true);
+            $table->enum('status', ['en solde', 'standard'])->default('standard');
             $table->string('reference', 16)->unique();
             $table->timestamps();
         });

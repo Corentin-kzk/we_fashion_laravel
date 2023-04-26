@@ -57,7 +57,7 @@
                                     </li>
                                     @endif
                                     @if(Auth::user()->userType === 'admin')
-                                    <li><a href="" class="dropdown-item">interface d'administration</a></li>
+                                    <li><a href="/admin" class="dropdown-item">interface d'administration</a></li>
                                     @endif
                                     <li>
                                         <a href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Se deconnecter</a>

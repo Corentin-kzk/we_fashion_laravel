@@ -13,7 +13,7 @@
         <div class="col">
 
             <div class="card" style="height: 100%">
-                <img src="{{$product->image}}" class="card-img-top" alt="items shop">
+                <img src="{{ Storage::url($product->image)}}" class="card-img-top" alt="items shop">
                 <div class="card-body">
                     <div class="h-25">
                         <h2 class="card-title font-monospace fs-4">{{$product->name}}

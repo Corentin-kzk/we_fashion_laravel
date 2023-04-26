@@ -24,7 +24,7 @@ class ProductFactory extends Factory
             'image' => $this->faker->imageUrl($width = 640, $height = 480),
             'published' => $this->faker->boolean($chanceOfGettingTrue = 50),
             'status' => $this->faker->randomElement(['standard', 'en solde']),
-            'reference' => $this->faker->regexify('[A-Za-z0-9]{16}'),
+            'reference' => $this->faker->regexify('^#W_F\d{4}[a-zA-Z]{2}[0-9a-zA-Z]{0,6}$'),
         ];
     }
 }
