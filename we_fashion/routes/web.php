@@ -23,4 +23,5 @@ Route::get('/category/{slug}', [ProductController::class, 'category']);
 Route::resource('product', ProductController::class);
 Auth::routes();
 
+Route::get('/admin',[function() { return view('layouts.dashboard');}]);
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

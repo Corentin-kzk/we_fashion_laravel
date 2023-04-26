@@ -90,7 +90,7 @@ class ProductController extends Controller
             $query->where('slug', '=', $slug);
         })->whereDoesntHave('categories', function($query) use ($slug) {
             $query->where('slug', '<>', $slug);
-        })->with('sizes')->with('categories')->orderBy('created_at', 'desc')->get()) ]);
+        })->get()) ]);
         } else {
             abort(404, 'Ressource non trouvée');
         }

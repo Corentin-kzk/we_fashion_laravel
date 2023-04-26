@@ -24,12 +24,12 @@ class NavbarSeeder extends Seeder
             [
                 'name' => 'Homme',
                 'route' => '/category/men',
-                'ordering' => 2,
+                'ordering' => 3,
             ],
             [
-                'name' => 'Femme',
+                'name' => 'aspirateur',
                 'route' => '/category/women',
-                'ordering' => 3,
+                'ordering' => 2,
             ],
         ];
 
