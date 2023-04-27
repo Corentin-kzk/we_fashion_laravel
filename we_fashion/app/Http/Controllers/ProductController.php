@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Categorie;
 use App\Models\Product;
+use App\Models\Size;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Faker\Generator;
@@ -76,7 +77,8 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        view('product.update', ["products" => Product::with('sizes')->orderBy('created_at', 'desc')->with('categories')->paginate(6), 'counter' => count(Product::get(['id']))]);
+
+        return view('product.update', ["product" => $product, 'sizes' => Size::pluck('label', 'id'), 'categories' => Categorie::pluck('label', 'id')]);
     }
 
     /**
@@ -90,7 +92,7 @@ class ProductController extends Controller
     }
 
     /**
-     * 
+     *
      */
     public function destroy(Product $product)
     {

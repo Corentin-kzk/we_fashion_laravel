@@ -13,12 +13,13 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/css/tom-select.bootstrap5.css" rel="stylesheet">
 
     <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/js/tom-select.complete.min.js"></script>
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
@@ -76,6 +77,13 @@
             <span>@Dashboard-administrateur</span>
         </footer>
     </div>
+
+
+    <script>
+        const selectMultipleArray = document.querySelectorAll('select[multiple]')
+        selectMultipleArray.forEach((el)=> new TomSelect(`#${el.id}`, { plugins:  {remove_button: {title: 'Supprimer'}} }))
+    </script>
 </body>
+
 
 </html>

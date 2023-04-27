@@ -35,7 +35,7 @@
                         <td>{{$product->price}}</td>
                         <td>{{$product->status}}</td>
                         <td>
-                            <div><a href="{{route('admin.product.edit', $product->id)}}" class="d-block mx-auto btn btn-outline-secondary rounded-circle"><i class="bi bi-pencil-square"></i></a></div>
+                            <div><a href="{{route('admin.product.edit', $product)}}" class="d-block mx-auto btn btn-outline-secondary rounded-circle"><i class="bi bi-pencil-square"></i></a></div>
                         </td>
                         <td>
                             <div class="d-block mx-auto"><button type="button"  data-bs-toggle="modal" data-bs-target="#deleteModal-{{$product->id}}"  class="d-block mx-auto btn btn-outline-danger rounded-circle"><i class="bi bi-trash3-fill"></i></button> </div>
