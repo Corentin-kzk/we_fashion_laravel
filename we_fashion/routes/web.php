@@ -21,15 +21,15 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [ProductController::class, 'index'])->name('index');
 Route::get('solde', [ProductController::class, 'solde'])->name('solde');
 Route::get('/category/{slug}', [ProductController::class, 'category']);
-Route::resource('product', ProductController::class)->except(['store', 'update','create', 'destroy']);
+Route::resource('product', ProductController::class)->except(['store', 'update','create','edit', 'destroy']);
 
 
 Auth::routes();
 
-Route::middleware(['auth', 'mustBeAdmin'])->name('admin.')->group(function () {
+Route::middleware(['auth', 'mustBeAdmin'])->name('admin.')->prefix('/admin')->group(function () {
     Route::resource('product', ProductController::class)->except(['index', 'show','create']);
-    Route::get('/admin', [AdminController::class, 'index']);
-    Route::get('/admin/products', [AdminController::class, 'products'])->name(('products'));
-    Route::get('/admin/categories', [AdminController::class, 'categories'])->name(('categories'));
+    Route::get('/', [AdminController::class, 'index'])->name('index');
+    Route::get('/products', [AdminController::class, 'products'])->name(('products'));
+    Route::get('/categories', [AdminController::class, 'categories'])->name(('categories'));
 });
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
