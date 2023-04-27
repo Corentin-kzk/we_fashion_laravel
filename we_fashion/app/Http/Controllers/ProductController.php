@@ -16,8 +16,23 @@ class ProductController extends Controller
         'name' => 'required|string|min:5|max:100',
         'description' => 'nullable|string',
         'price' => 'required|numeric|between:0,999999.99',
-        'image' => 'nullable|string',
-        'published' => 'boolean',
+        'image' => 'string',
+    ];
+
+    protected $validationMessages = [
+        'required' => 'Le champ :attribute est obligatoire.',
+        'string' => 'Le champ :attribute doit être une chaîne de caractères.',
+        'min' => [
+            'string' => 'Le champ :attribute doit contenir au moins :min caractères.',
+        ],
+        'max' => [
+            'string' => 'Le champ :attribute ne peut pas contenir plus de :max caractères.',
+        ],
+        'numeric' => 'Le champ :attribute doit être un nombre.',
+        'between' => [
+            'numeric' => 'Le champ :attribute doit être compris entre :min et :max.',
+        ],
+        'boolean' => 'Le champ :attribute doit être vrai ou faux.',
     ];
 
     protected $destinationPath = 'images/';
@@ -26,41 +41,49 @@ class ProductController extends Controller
      */
     public function index(): View
     {
-        return View('index', ["products" => Product::with('sizes')->orderBy('created_at', 'desc')->with('categories')->paginate(6), 'counter' => count(Product::get(['id']))]);
+        return View('index', ["products" => Product::with('sizes')->orderBy('created_at', 'desc')->with('categories')->paginate(6)]);
+    }
+    /**
+     * Show the form for creating the specified resource.
+     */
+    public function create()
+    {
+
+        return view('product.create', ['product' => new Product,'sizes' => Size::pluck('label', 'id'), 'categories' => Categorie::pluck('label', 'id')]);
     }
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        if (Auth()->user()->userType === 'admin') {
-            $faker = Container::getInstance()->make(Generator::class);
-            //uplaod Image
-            $picture = '';
-            if ($image = $request->file('picture')) {
-                $picture = time() . "." . $image->getClientOriginalExtension();
-                $picture = $image->storeAs('public/images', $picture);
-            }
-            // status handler
-            $status = $request->input('status') ?  'en solde'  : 'standard';
-            // published handler
-            $published = $request->input('published') ?  false : true;
+        $faker = Container::getInstance()->make(Generator::class);
+        //uplaod Image
+        $picture = '';
+        if ($image = $request->file('picture')) {
+            $picture = time() . "." . $image->getClientOriginalExtension();
+            $picture = $image->storeAs('public/images', $picture);
+        }
+        $request->validate($this->validationRules, $this->validationMessages);
 
-            $request->validate($this->validationRules);
-            $product = new Product;
-            $product->name = $request->input('name');
-            $product->description = $request->input('description');
-            $product->price = $request->input('price');
-            $product->image =  $picture;
-            $product->reference = $faker->regexify('^#W_F\d{4}[a-zA-Z]{2}[0-9a-zA-Z]{0,6}$');
-            $product->status = $status;
-            $product->published = $published;
-            $product->save();
-            return redirect()->route('admin.products')
-                ->with('success', 'Product created successfully.');
-        } else {
-            return view('index');
-        };
+        $product = new Product;
+        $product->name = $request->input('name');
+        $product->description = $request->input('description');
+        $product->price = $request->input('price');
+        $product->image =  $picture;
+        $product->reference = $faker->regexify('^#W_F\d{4}[a-zA-Z]{2}[0-9a-zA-Z]{0,6}$');
+        $product->status =  boolval($request->input('status'));
+        $product->published =  !boolval($request->input('published'));
+        $product->save();
+
+        // Ajouter les relations avec les catégories
+        $categories = Categorie::whereIn('id', $request->input('categories'))->get();
+        $product->categories()->attach($categories);
+        // Ajouter les relations avec les tailles
+        $sizes = Size::whereIn('id', $request->input('sizes'))->get();
+        $product->sizes()->attach($sizes);
+        $product->save();
+        return redirect()->route('admin.products')
+            ->with('success', 'Product created successfully.');
     }
 
     /**
@@ -72,12 +95,12 @@ class ProductController extends Controller
         return View('product.index', ['product' => $product]);
     }
 
+
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(Product $product)
     {
-
         return view('product.update', ["product" => $product, 'sizes' => Size::pluck('label', 'id'), 'categories' => Categorie::pluck('label', 'id')]);
     }
 
@@ -86,11 +109,14 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
+        $request->validate($this->validationRules, $this->validationMessages);
+
+        $product->sizes()->sync($request->input('sizes') ?? []);
+        $product->categories()->sync($request->input('categories') ?? []);
         $product->update();
         return redirect()->route('admin.products')
-                        ->with('success','Post updated successfully');
+            ->with('success', 'Post updated successfully');
     }
-
     /**
      *
      */
@@ -98,7 +124,7 @@ class ProductController extends Controller
     {
         $product->delete();
         return redirect()->route('admin.products')
-                        ->with('success','Post deleted successfully');
+            ->with('success', 'Post deleted successfully');
     }
 
     /**
@@ -106,7 +132,7 @@ class ProductController extends Controller
      */
     public function Solde(): View
     {
-        return View('index', ["products" => Product::where('published', true)->where('status', 'en solde')->orderBy('created_at', 'desc')->with('sizes')->with('categories')->paginate(6), 'counter' => count(Product::where('published', true)->where('status', 'en solde')->get(['id']))]);
+        return View('index', ["products" => Product::where('published', true)->where('status', true)->orderBy('created_at', 'desc')->with('sizes')->with('categories')->paginate(6)]);
     }
 
     /**
@@ -121,11 +147,7 @@ class ProductController extends Controller
             })->whereDoesntHave('categories', function ($query) use ($slug) {
                 $query->where('slug', '<>', $slug);
             })->with('sizes')->with('categories')->orderBy('created_at', 'desc')->paginate(6);
-            return View('index', ["products" => $product, 'counter' => count(Product::where('published', true)->whereHas('categories', function ($query) use ($slug) {
-                $query->where('slug', '=', $slug);
-            })->whereDoesntHave('categories', function ($query) use ($slug) {
-                $query->where('slug', '<>', $slug);
-            })->get())]);
+            return View('index', ["products" => $product]);
         } else {
             abort(404, 'Ressource non trouvée');
         }

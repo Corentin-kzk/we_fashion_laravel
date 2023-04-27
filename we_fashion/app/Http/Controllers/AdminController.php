@@ -18,8 +18,4 @@ class AdminController extends Controller
     {
         return view('admin.products', ['products' => Product::orderBy('created_at', 'desc')->paginate(15), 'categories' => Categorie::all(['id', 'label'])->toArray(), 'sizes' => Size::all(['id','label'])->toArray()]);
     }
-    public function categories()
-    {
-        return view('admin.categories');
-    }
 }

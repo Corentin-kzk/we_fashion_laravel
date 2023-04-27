@@ -41,6 +41,9 @@
                                 </div>
                             </li>
                             <li>
+                                <a href="{{ route('index') }}" class="dropdown-item">Accéder au site</a>
+                            </li>
+                            <li>
                                 <a href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Se deconnecter</a>
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                     @csrf
@@ -63,7 +66,7 @@
                                 <a class="nav-link" href="{{route('admin.products')}}">Produits</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{route('admin.categories')}}">Categories</a>
+                                <a class="nav-link" href="{{route('admin.categories.index')}}">Categories</a>
                             </li>
                         </ul>
                     </div>

@@ -8,7 +8,7 @@
     </div>
     <div class="row justify-content-end align-items-center my-3">
         <div class="col-2 clearfix">
-            <button type="button" class="btn btn-outline-dark float-end" data-bs-toggle="modal" data-bs-target="#addProductModal">Nouveau produit <i class="bi bi-plus"></i></button>
+            <a href="{{route('admin.product.create')}}" class="btn btn-outline-dark float-end">Nouveau produit <i class="bi bi-plus"></i></a>
         </div>
     </div>
     <div class="row">
@@ -17,11 +17,14 @@
                 <caption>Liste des produits</caption>
                 <thead>
                     <tr>
+                        <th scope="col">Image</th>
                         <th scope="col">#Réferences</th>
                         <th scope="col">Nom</th>
                         <th scope="col">Categorie(s)</th>
-                        <th scope="col">Prix</th>
-                        <th scope="col">Etat</th>
+                        <th scope="col">Prix (<i class="bi bi-currency-euro"></i>)</th>
+                        <th scope="col">Tailles</th>
+                        <th scope="col">Soldé</th>
+                        <th scope="col">Visible</th>
                         <th scope="col" class="text-center">Editer</th>
                         <th scope="col" class="text-center">Supprimer</th>
                     </tr>
@@ -29,16 +32,19 @@
                 <tbody class="table-group-divider ">
                     @foreach($products as $product)
                     <tr>
+                        <td style="width: 10%"><img src="{{$product->imageUrl()}}" class="img-fluid img-thumbnail" alt="pictures"></td>
                         <th scope="row">{{$product->reference}}</th>
                         <td>{{$product->name}}</td>
                         <td>{{ implode(', ', array_column($product->categories->toArray(), 'label')) }}</td>
-                        <td>{{$product->price}}</td>
-                        <td>{{$product->status}}</td>
-                        <td>
-                            <div><a href="{{route('admin.product.edit', $product)}}" class="d-block mx-auto btn btn-outline-secondary rounded-circle"><i class="bi bi-pencil-square"></i></a></div>
+                        <td>{{$product->price}}<i class="bi bi-currency-euro"></i></td>
+                        <td>{{ implode(', ', array_column($product->sizes->toArray(), 'label')) }}</td>
+                        <td class="text-center">@if($product->status) <i class="bi bi-check2-all text-success"></i> @else <i class="bi bi-x-lg text-danger"></i>@endif</td>
+                        <td class="text-center">@if($product->published) <i class="bi bi-check2-all text-success"></i> @else <i class="bi bi-x-lg text-danger"></i> @endif</td>
+                        <td class="text-center">
+                            <a href="{{route('admin.product.edit', $product)}}" class="btn btn-outline-secondary rounded-circle"><i class="bi bi-pencil-square"></i></a>
                         </td>
                         <td>
-                            <div class="d-block mx-auto"><button type="button"  data-bs-toggle="modal" data-bs-target="#deleteModal-{{$product->id}}"  class="d-block mx-auto btn btn-outline-danger rounded-circle"><i class="bi bi-trash3-fill"></i></button> </div>
+                            <div class="d-block mx-auto"><button type="button" data-bs-toggle="modal" data-bs-target="#deleteModal-{{$product->id}}" class="d-block mx-auto btn btn-outline-danger rounded-circle"><i class="bi bi-trash3-fill"></i></button> </div>
                             @include('product.modal.delete', ["product"=> $product])
                         </td>
                     </tr>
@@ -50,7 +56,6 @@
     <div class="row">
         {{$products->links()}}
     </div>
-    @include('product.modal.create')
 </div>
 
 @endsection

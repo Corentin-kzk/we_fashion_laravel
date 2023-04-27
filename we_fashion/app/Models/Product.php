@@ -11,13 +11,21 @@ class Product extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'name', 'detail'
+        'name',
+        "name",
+        "description",
+        "price",
+        "image",
+        "reference",
+        "status",
+        "published",
+        "categories",
     ];
-    public function sizes() : belongsToMany
+    public function sizes(): belongsToMany
     {
         return $this->belongsToMany(Size::class);
     }
-    public function categories() : belongsToMany
+    public function categories(): belongsToMany
     {
         return $this->belongsToMany(Categorie::class);
     }

@@ -14,7 +14,7 @@ class CategorieController extends Controller
      */
     public function index()
     {
-
+        return view('admin.categories',['categories' => Categorie::all()]);
     }
 
     /**
@@ -22,7 +22,8 @@ class CategorieController extends Controller
      */
     public function create()
     {
-        //
+        $category = new Categorie();
+        return view('category.form', ['category'=> $category]);
     }
 
     /**
@@ -30,40 +31,49 @@ class CategorieController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $request->validate([
+            'label' => 'string|required'
+        ]);
+        $category = new Categorie();
+        $category->label = $request->input('label');
+        $category->slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-',  $request->input('label'))));
+
+        $category->save();
+        return redirect()->route('admin.categories.index')
+        ->with('success', 'Category create successfully');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Categorie $categorie)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Categorie $categorie)
+    public function edit(Categorie $category)
     {
-        //
+        return view('category.form', ['category' => $category]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Categorie $categorie)
+    public function update(Request $request, Categorie $category)
     {
-        //
+        $category->label = $request->input('label');
+        $category->slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-',  $request->input('label'))));
+        $category->update();
+        return redirect()->route('admin.categories.index')
+        ->with('success', 'Category update successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Categorie $categorie)
+    public function destroy(Categorie $category)
     {
-        //
+        $category->delete();
+        return redirect()->route('admin.categories.index')
+            ->with('success', 'Category deleted successfully');
     }
 
-    
+
 }

@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Categorie;
 use App\Models\Navbar;
+use Illuminate\Contracts\View\View as ViewView;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 use View;
@@ -24,9 +26,9 @@ class AppServiceProvider extends ServiceProvider
     {
         Paginator::useBootstrapFive();
 
-        View::composer('*', function($view)
+        View::composer('*', function($view):void
         {
-            $navbars = Navbar::orderBy('ordering')->get();
+            $navbars = Categorie::orderBy('id')->get();
             $view->with('navbars', $navbars);
         });
     }
