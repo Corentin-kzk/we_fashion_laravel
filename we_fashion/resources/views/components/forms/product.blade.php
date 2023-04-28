@@ -11,7 +11,7 @@
         </div>
         <div class="mb-3 col-md-12">
             <label for="description" class="form-label">Description du produit</label>
-            <textarea @class(['form-control','is-invalid'=> $errors->has('description') ]) id="description" rows="3" name="description" value="{{ $product->exists ? $product->description : "" }}"></textarea>
+            <textarea @class(['form-control','is-invalid'=> $errors->has('description') ]) id="description" rows="3" name="description">{{ $product->exists ? $product->description  : ""}}</textarea>
             @error('description')
             <div class="alert alert-danger">{{ $message }}</div>
             @enderror
@@ -40,7 +40,7 @@
         <div class="mb-3 col-md-6">
             <label class="form-label">Le produit est-il soldé ?</label>
             <div class="form-check form-switch">
-                <input  @class(['form-check-input','is-invalid'=> $errors->has('status') ]) name="status" value="status" type="checkbox" role="switch" @checked(boolval($product->status)) id="status">
+                <input  @class(['form-check-input','is-invalid'=> $errors->has('status') ]) name="status" type="checkbox" value='1' @checked(boolval($product->status)) id="status">
                 <label class="form-check-label" for="status">Soldé</label>
                 @error('status')
                 <div class="alert alert-danger">{{ $message }}</div>
@@ -50,7 +50,7 @@
         <div class="mb-3 col-md-6">
             <label for="exampleFormControlInput1" class="form-label">Le produit doit-il etre caché ?</label>
             <div class="form-check form-switch">
-                <input @class(['form-check-input','is-invalid'=> $errors->has('published') ]) name="published" value="published" type="checkbox" role="switch"  @checked(boolval(!$product->published)) id="published">
+                <input @class(['form-check-input','is-invalid'=> $errors->has('published') ]) name="published" type="checkbox" value='1'  @checked(!boolval($product->published)) id="published">
                 <label class="form-check-label" for="published">Caché</label>
                 @error('status')
                 <div class="alert alert-danger">{{ $message }}</div>

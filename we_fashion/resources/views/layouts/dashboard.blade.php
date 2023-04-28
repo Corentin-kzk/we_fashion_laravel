@@ -29,7 +29,8 @@
         <header>
             <nav class="navbar bg-body-tertiary bg-dark">
                 <div class="container">
-                    <span class="text-primary mb-0 h1">{{ config('app.name', 'Laravel') }}</span>
+                    <h1 class="text-primary mb-0">{{ config('app.name', 'Laravel') }}<span style="font-size: 15px!important;margin-left: 10px">( admin )</span></h1>
+
                     <div class="btn-group">
                         <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bi bi-person-circle"></i>
@@ -61,12 +62,12 @@
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <ul class="navbar-nav nav nav-underline me-auto mb-2 mb-lg-0">
                             <li class="nav-item">
-                                <a class="nav-link" href="{{route('admin.products')}}">Produits</a>
+                                <a @class(["nav-link", 'active'=> Route::is('admin.products')] )href="{{route('admin.products')}}">Produits</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{route('admin.categories.index')}}">Categories</a>
+                                <a @class(["nav-link", 'active'=> Route::is('admin.categories.index')] ) href="{{route('admin.categories.index')}}">Categories</a>
                             </li>
                         </ul>
                     </div>
@@ -74,9 +75,17 @@
             </nav>
         </header>
         <main class="container" style="min-height: 100vh;">
+            @if (!Route::is('admin.index'))
+            <div class="row">
+                <div class="col-1 m-2">
+                    <a href="{{ url()->previous() ?? route('admin.index') }}" class="btn btn-outline-primary rounded"><i class="bi bi-arrow-return-left"></i> </a>
+                </div>
+            </div>
+            @endif
+
             @yield('content')
         </main>
-        <footer>
+        <footer class="text-center">
             <span>@Dashboard-administrateur</span>
         </footer>
     </div>
@@ -84,7 +93,13 @@
 
     <script>
         const selectMultipleArray = document.querySelectorAll('select[multiple]')
-        selectMultipleArray.forEach((el)=> new TomSelect(`#${el.id}`, { plugins:  {remove_button: {title: 'Supprimer'}} }))
+        selectMultipleArray.forEach((el) => new TomSelect(`#${el.id}`, {
+            plugins: {
+                remove_button: {
+                    title: 'Supprimer'
+                }
+            }
+        }))
     </script>
 </body>
 

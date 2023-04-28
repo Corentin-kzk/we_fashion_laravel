@@ -49,7 +49,7 @@ class ProductController extends Controller
     public function create()
     {
 
-        return view('product.create', ['product' => new Product,'sizes' => Size::pluck('label', 'id'), 'categories' => Categorie::pluck('label', 'id')]);
+        return view('product.create', ['product' => new Product, 'sizes' => Size::pluck('label', 'id'), 'categories' => Categorie::pluck('label', 'id')]);
     }
     /**
      * Store a newly created resource in storage.
@@ -65,14 +65,15 @@ class ProductController extends Controller
         }
         $request->validate($this->validationRules, $this->validationMessages);
 
+        // dd($request->input('published'), $request->input('status'));
         $product = new Product;
         $product->name = $request->input('name');
         $product->description = $request->input('description');
         $product->price = $request->input('price');
         $product->image =  $picture;
         $product->reference = $faker->regexify('^#W_F\d{4}[a-zA-Z]{2}[0-9a-zA-Z]{0,6}$');
-        $product->status =  boolval($request->input('status'));
-        $product->published =  !boolval($request->input('published'));
+        $product->status = $request->input('status') === "1" ? true : false;
+        $product->published =  $request->input('published') === "1" ? false  :  true;
         $product->save();
 
         // Ajouter les relations avec les catégories
@@ -91,7 +92,6 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        $product = Product::where('published', true)->orderBy('created_at', 'desc')->with('sizes')->find($product->id);
         return View('product.index', ['product' => $product]);
     }
 
@@ -113,6 +113,8 @@ class ProductController extends Controller
 
         $product->sizes()->sync($request->input('sizes') ?? []);
         $product->categories()->sync($request->input('categories') ?? []);
+        $product->status = $request->input('status') === "1" ? true : false;
+        $product->published =  $request->input('published') === "1" ? false  :  true;
         $product->update();
         return redirect()->route('admin.products')
             ->with('success', 'Post updated successfully');
