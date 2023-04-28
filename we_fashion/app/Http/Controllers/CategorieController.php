@@ -37,7 +37,8 @@ class CategorieController extends Controller
         ]);
         $category = new Categorie();
         $category->label = $request->input('label');
-        $category->slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-',  $request->input('label'))));
+
+        $category->slug =  Str::slug($request->input('label'));
 
         $category->save();
         return redirect()->route('admin.categories.index')
