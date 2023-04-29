@@ -83,7 +83,7 @@
         <footer class="text-center text-lg-start bg-light text-muted">
             <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
                 <div class="me-5 d-none d-lg-block">
-                    <span>Get connected with us on social networks: </span>
+                    <span>Reste en contact avec nous via nos réseaux sociaux : </span>
                 </div>
                 <div>
                     <a class="me-4 text-reset" href="https://facebook.fr"><i class="bi bi-facebook"></i></a>
@@ -132,7 +132,6 @@
                                 We_Fashion@example.com
                             </p>
                             <p><i class="fas fa-phone me-3"></i> + 01 234 567 88</p>
-                            <p><i class="fas fa-print me-3"></i> + 01 234 567 89</p>
                         </div>
                     </div>
                 </div>

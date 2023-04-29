@@ -41,7 +41,7 @@ class ProductController extends Controller
      */
     public function index(): View
     {
-        return View('index', ["products" => Product::with('sizes')->orderBy('created_at', 'desc')->with('categories')->paginate(6)]);
+        return View('index', ["products" => Product::where('published', true)->with('sizes')->orderBy('created_at', 'desc')->with('categories')->paginate(6)]);
     }
     /**
      * Show the form for creating the specified resource.
@@ -65,7 +65,7 @@ class ProductController extends Controller
         }
         $request->validate($this->validationRules, $this->validationMessages);
 
-        // dd($request->input('published'), $request->input('status'));
+
         $product = new Product;
         $product->name = $request->input('name');
         $product->description = $request->input('description');

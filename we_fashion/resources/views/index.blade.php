@@ -37,7 +37,7 @@
                         </div>
                         <div class="col-5 offset-2">
                             <p class="text-end">
-                                Size :
+                                Taille :
                                 {{ implode(', ', array_column($product->sizes->toArray(), 'label')) }}
                             </p>
                         </div>

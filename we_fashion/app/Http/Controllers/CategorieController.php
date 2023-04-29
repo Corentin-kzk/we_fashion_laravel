@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Categorie;
-use COM;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class CategorieController extends Controller
 {
