@@ -4,11 +4,11 @@
 
 <div class="container-fluid">
     <div class="row">
-        <h1>Categories</h1>
+        <h1>Categories</h1>        
     </div>
     <div class="row justify-content-end align-items-center my-3">
         <div class="col-2 clearfix">
-            <a href="{{route('admin.categories.create')}}" class="btn btn-outline-dark float-end">Nouveau produit <i class="bi bi-plus"></i></a>
+            <a href="{{route('admin.categories.create')}}" class="btn btn-outline-dark float-end">Nouvelle catégorie<i class="bi bi-plus"></i></a>
         </div>
     </div>
     <div class="row">
